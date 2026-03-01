@@ -4,12 +4,10 @@ import requests
 
 st.set_page_config(page_title="Consulta NCM - Irmãos Resende", layout="centered")
 
-# Estilização para as cores da marca (opcional)
 st.markdown("""
     <style>
-    .main { background-color: #0e1117; }
-    .stButton>button { width: 100%; border-radius: 5px; height: 3em; background-color: #ff4b4b; color: white; }
-    .resumo-card { padding: 20px; border-radius: 10px; border: 1px solid #464b5d; background-color: #1e2129; margin-bottom: 15px; }
+    .stButton>button { width: 100%; background-color: #002e5d; color: white; font-weight: bold; }
+    .resumo-card { padding: 20px; border-radius: 10px; border: 1px solid #d1d1d1; background-color: #f8f9fa; color: #333; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -19,54 +17,54 @@ st.subheader("Irmãos Resende - Inteligência Fiscal")
 @st.cache_data
 def carregar_dados():
     try:
-        # Lê o CSV e garante que o NCM seja tratado como texto para não perder o "0" à esquerda
         df = pd.read_csv('base.csv', dtype={'NCM': str})
-        # Remove pontos do NCM caso existam na planilha (ex: 2710.19.10 -> 27101910)
-        df['NCM_Limpo'] = df['NCM'].str.replace('.', '', regex=False)
+        # Limpa o NCM da planilha: remove pontos e espaços
+        df['NCM_Busca'] = df['NCM'].str.replace('.', '', regex=False).str.strip().str.split(' ').str[0]
         return df
     except Exception as e:
-        st.error(f"Erro ao carregar base: {e}")
+        st.error(f"Erro ao carregar base.csv: {e}")
         return None
 
-df_monofasicos = carregar_dados()
+df_base = carregar_dados()
+EXCECOES = ['30039056', '30049046']
 
-ncm_input = st.text_input("Digite o NCM (8 dígitos):", placeholder="Ex: 27101910").replace('.', '')
+ncm_digitado = st.text_input("Digite o NCM (8 dígitos):", placeholder="Ex: 87081000").replace('.', '').strip()
 
-if st.button("Analisar NCM"):
-    if len(ncm_input) == 8:
-        with st.spinner('Processando...'):
-            # 1. Busca na BrasilAPI para Descrição Oficial
-            res = requests.get(f"https://brasilapi.com.br/api/ncm/v1/{ncm_input}")
-            desc_oficial = res.json().get('descricao', 'Descrição não encontrada') if res.status_code == 200 else "NCM não localizado na Receita"
+if st.button("Analisar Tributação"):
+    if len(ncm_digitado) >= 4:
+        with st.spinner('Verificando...'):
+            # 1. Busca nome oficial na API
+            res = requests.get(f"https://brasilapi.com.br/api/ncm/v1/{ncm_digitado}")
+            desc_api = res.json().get('descricao', 'NCM não encontrado na Receita') if res.status_code == 200 else "NCM Inválido"
 
-            # 2. Busca na sua nova planilha base.csv
-            resultado = df_monofasicos[df_monofasicos['NCM_Limpo'] == ncm_input] if df_monofasicos is not None else pd.DataFrame()
+            # 2. Lógica de busca na sua nova lista
+            # Verifica se o NCM digitado começa com algum NCM da sua lista (ex: 30031010 começa com 3003)
+            match = None
+            if df_base is not None:
+                for idx, row in df_base.iterrows():
+                    if ncm_digitado.startswith(row['NCM_Busca']):
+                        match = row
+                        break
 
-            if not resultado.empty:
-                item = resultado.iloc[0]
-                st.success("✅ **PRODUTO IDENTIFICADO COMO MONOFÁSICO**")
-                
-                # Card de Detalhes
+            if ncm_digitado in EXCECOES:
+                st.error(f"⚠️ **EXCEÇÃO:** O NCM {ncm_digitado} é uma exceção à regra monofásica.")
+            elif match is not None:
+                st.success("✅ **PRODUTO MONOFÁSICO IDENTIFICADO**")
                 st.markdown(f"""
                 <div class="resumo-card">
-                    <h4>{item['Descrição']}</h4>
-                    <p><b>Grupo:</b> {item['Grupo/Subgrupo NCM']}</p>
+                    <h4>{desc_api}</h4>
+                    <p><b>Referência na Tabela:</b> {match['NCM']}</p>
+                    <p><b>Descrição na Lista:</b> {match['Descricao']}</p>
                     <hr>
-                    <p><b>Alíquota PIS (Ind./Imp.):</b> {item['PIS']}</p>
-                    <p><b>Alíquota COFINS (Ind./Imp.):</b> {item['COFINS']}</p>
-                    <p><b>CST Sugerido (Venda):</b> {item['CST 04']}</p>
-                    <p><b>Fundamentação:</b> {item['Fundamentação']}</p>
+                    <p><b>CST de Saída (Varejo):</b> 04 (Alíquota Zero)</p>
+                    <p><b>Fundamentação:</b> Lei 10.485/2002 ou Lei 10.147/2000</p>
                 </div>
                 """, unsafe_allow_html=True)
-                
-                with st.expander("Ver Orientação Completa"):
-                    st.write(f"**Aplicação:** {item['Aplicação']}")
-                    st.write(f"**Condição:** {item['Condição']}")
             else:
-                st.warning("⚠️ **ATENÇÃO:** Este NCM não consta na lista de produtos Monofásicos.")
-                st.info(f"**Descrição Oficial (BrasilAPI):** {desc_oficial}")
+                st.warning("ℹ️ **TRIBUTAÇÃO NORMAL:** Este NCM não foi localizado na lista de Monofásicos.")
+                st.write(f"**Descrição Oficial:** {desc_api}")
     else:
-        st.error("Por favor, digite os 8 números do NCM.")
+        st.error("Digite pelo menos 4 dígitos do NCM.")
 
 st.markdown("---")
-st.caption("Base de dados: Tabela 4.3.10 - Versão 1.24 (Atualizada Jul/2025)")
+st.caption("© 2026 Irmãos Resende | Dados baseados na Tabela 4.3.10 e Leis 10.485/10.147.")
