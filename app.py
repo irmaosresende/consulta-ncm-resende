@@ -1,57 +1,45 @@
 import streamlit as st
 import pandas as pd
+import requests
 
-# Configuração da Página
-st.set_page_config(page_title="Consulta Monofásica - Irmãos Resende", page_icon="📊")
-
-# Estilização personalizada para combinar com a marca
-st.markdown("""
-    <style>
-    .main { background-color: #f5f5f5; }
-    .stButton>button { width: 100%; background-color: #004a99; color: white; }
-    </style>
-    """, unsafe_allow_html=True)
+st.set_page_config(page_title="Consulta NCM - Irmãos Resende", layout="centered")
 
 st.title("🔍 Consulta de NCM Monofásico")
 st.subheader("Irmãos Resende - Inteligência Tributária")
 
-# Carregar dados
+# Tentativa de carregar a sua base local de monofásicos
 @st.cache_data
 def carregar_dados():
-    # Certifique-se de que o CSV existe ou use um dicionário para teste
     try:
-        df = pd.read_csv('dados.csv', dtype={'ncm': str})
+        df = pd.read_csv('base.csv', dtype={'NCM': str})
         return df
     except:
-        return pd.DataFrame(columns=['ncm', 'descricao', 'natureza_receita'])
+        return None
 
 df_monofasicos = carregar_dados()
 
-# Input do usuário
-ncm_input = st.text_input("Digite o código NCM (apenas números):", max_chars=8)
+ncm_input = st.text_input("Digite o código NCM (apenas 8 números):", max_chars=8)
 
 if st.button("Verificar Tributação"):
     if len(ncm_input) == 8:
-        # Busca o NCM na base
-        resultado = df_monofasicos[df_monofasicos['ncm'] == ncm_input]
-        
-        if not resultado.empty:
-            st.success("✅ Este produto está no regime MONOFÁSICO!")
+        # 1. Consulta na BrasilAPI para pegar a descrição oficial
+        with st.spinner('Consultando BrasilAPI...'):
+            url = f"https://brasilapi.com.br/api/ncm/v1/{ncm_input}"
+            response = requests.get(url)
             
-            # Exibir detalhes em cards
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric("NCM", ncm_input)
-            with col2:
-                st.metric("Nat. Receita", resultado['natureza_receita'].values[0])
-            
-            st.info(f"**Descrição:** {resultado['descricao'].values[0]}")
-            st.warning("⚠️ Lembre-se de segregar as receitas no PGDAS-D para não pagar PIS/COFINS em duplicidade.")
-        else:
-            st.error("❌ NCM não encontrado na lista de monofásicos.")
-            st.write("Isso significa que o produto pode ser tributação normal (Alíquota Básica) ou não está na nossa base atualizada.")
+            if response.status_code == 200:
+                dados_api = response.json()
+                st.info(f"**Descrição Oficial:** {dados_api['descricao']}")
+                
+                # 2. Verifica se está na sua lista de monofásicos
+                if df_monofasicos is not None and ncm_input in df_monofasicos['NCM'].values:
+                    st.success("✅ Este NCM consta como **MONOFÁSICO** em nossa base!")
+                else:
+                    st.warning("⚠️ Este NCM não foi encontrado na lista de monofásicos ou é tributação normal.")
+            else:
+                st.error("❌ NCM não encontrado na base da Receita Federal (BrasilAPI).")
     else:
         st.warning("Por favor, digite um NCM válido com 8 dígitos.")
 
 st.markdown("---")
-st.caption("© 2023 Irmãos Resende - Consultoria Tributária")
+st.caption("© 2026 Irmãos Resende - Consultoria Tributária")
