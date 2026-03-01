@@ -1,81 +1,11 @@
-NCM,Descricao
-4016.10.10,Item listado no Anexo I - Lei 10.485 (Autopeças)
-4016.99.90 Ex 03 e 05,Item listado no Anexo I - Lei 10.485 (Autopeças)
-68.13,Item listado no Anexo I - Lei 10.485 (Autopeças)
-7007.11.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-7007.21.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-7009.10.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-7320.10.00 Ex 01,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8301.20.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8302.30.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8407.33.90,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8407.34.90,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8408.20,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8409.91,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8409.99,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8413.30,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8413.91.00 Ex 01,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8414.80.21,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8414.80.22,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8415.20,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8421.23.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8421.31.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8431.41.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8431.42.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8433.90.90,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8481.80.99 Ex 01 e 02,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8483.10,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8483.20.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8483.30,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8483.40,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8483.50,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8505.20,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8507.10.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-85.11,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8512.20,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8512.30.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8512.40,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8512.90.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8527.2,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8536.50.90 Ex 03,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8536.50.90 Ex 01,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8539.10,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8544.30.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-8706.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-87.07,Item listado no Anexo I - Lei 10.485 (Autopeças)
-87.08,Item listado no Anexo I - Lei 10.485 (Autopeças)
-9029.20.10,Item listado no Anexo I - Lei 10.485 (Autopeças)
-9029.90.10,Item listado no Anexo I - Lei 10.485 (Autopeças)
-9030.39.21,Item listado no Anexo I - Lei 10.485 (Autopeças)
-9031.80.40,Item listado no Anexo I - Lei 10.485 (Autopeças)
-9032.89.2,Item listado no Anexo I - Lei 10.485 (Autopeças)
-9104.00.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-9401.20.00,Item listado no Anexo I - Lei 10.485 (Autopeças)
-40.09,"Tubos de borracha vulcanizada não endurecida, com acessórios, próprias para máquinas e veículos (Anexo II)"
-84.31,"Partes reconhecíveis como exclusiva ou principalmente destinadas às máquinas e aparelhos das posições 84.29 (Anexo II)"
-8408.90.90,"Motores próprios para máquinas dos códigos 84.29 a 8433.5 (Anexo II)"
-8412.21.10,"Cilindros hidráulicos próprios para máquinas dos códigos 84.29 a 8433.5 (Anexo II)"
-8412.21.90,"Outros motores hidráulicos de movimento retilíneo (cilindros) próprios para máquinas 84.29 a 8433.5 (Anexo II)"
-8412.31.10,"Cilindros pneumáticos próprios para produtos dos códigos 8701.20.00, 87.02 e 87.04 (Anexo II)"
-8413.60.19,"Bombas volumétricas rotativas próprias para produtos 84.29 a 87.04 (Anexo II)"
-8414.80.19,"Compressores de ar próprios para produtos dos códigos 8701.20.00, 87.02 e 87.04 (Anexo II)"
-8414.90.39,"Caixas de ventilação para veículos autopropulsados (Anexo II)"
-8432.90.00,"Partes de máquinas das posições 8432.40.00 e 8432.80.00 (Anexo II)"
-8481.10.00,"Válvulas redutoras de pressão próprias para máquinas e veículos autopropulsados (Anexo II)"
-8481.20.90,"Válvulas para transmissões óleo-hidráulicas ou pneumáticas (Anexo II)"
-8481.80.92,"Válvulas solenóides próprias para máquinas e veículos autopropulsados (Anexo II)"
-8483.60.1,"Embreagens de fricção próprias para máquinas dos códigos 84.29 a 8433.5 (Anexo II)"
-8501.10.19,"Motores de corrente contínua próprios para acionamento elétrico de vidros (Anexo II)"
-2710.11.59,"Gasolinas, Exceto Gasolina de Aviação (Tabela 4.3.10)"
-2710.12.59,"Gasolinas, Exceto Gasolina de Aviação (Tabela 4.3.10)"
-2710.19.21,"Óleo Diesel (Tabela 4.3.10)"
-2711.19.10,"Gás Liquefeito de Petróleo – GLP (Tabela 4.3.10)"
-2710.19.11,"Querosene de Aviação (Tabela 4.3.10)"
-3826.00.00,"Biodiesel (Tabela 4.3.10)"
-2207.10.00,"Álcool, Inclusive para Fins Carburantes (Tabela 4.3.10)"
-30.03,"Produtos Farmacêuticos (Tabela 4.3.10)"
-33.04,"Produtos de Perfumaria, de Toucador ou de Higiene Pessoal (Tabela 4.3.10)"
-40.11,"Pneumáticos Novos (Tabela 4.3.10)"
-40.13,"Câmaras-de-Ar de Borracha (Tabela 4.3.10)"
-22.03,"Cervejas de malte (Tabela 4.3.10)"
-22.02,"Águas adicionadas de açúcar ou aromatizadas e outras bebidas não alcoólicas (Tabela 4.3.10)"
+Codigo,Descricao,NCM,PIS,COFINS,Fundamentacao
+101,Gasolinas exceto aviação,27101259,10.20,47.40,Lei 9.718/98 art. 4
+102,Óleo Diesel e suas correntes,27101921,10.20,47.40,Lei 9.718/98 art. 4
+103,GLP (Gás Liquefeito de Petróleo),27111910,10.20,47.40,Lei 9.718/98 art. 4
+201,Produtos Farmacêuticos (Posição 30.01 a 30.04),3003,2.10,9.90,Lei 10.147/00 art. 1
+202,Produtos de Perfumaria e Higiene (33.03 a 33.07),3303,2.20,10.30,Lei 10.147/00 art. 1
+301,Pneus Novos (Posição 40.11),4011,2.00,9.50,Lei 10.485/02 art. 5
+302,Câmaras de Ar (Posição 40.13),4013,2.00,9.50,Lei 10.485/02 art. 5
+401,Águas minerais e potáveis,2201,2.32,10.68,Lei 13.097/15 art. 25
+402,Refrigerantes e refrescos,2202,2.32,10.68,Lei 13.097/15 art. 25
+403,Cervejas de malte,2203,2.32,10.68,Lei 13.097/15 art. 25
