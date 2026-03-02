@@ -2,179 +2,175 @@ import streamlit as st
 import pandas as pd
 import requests
 
-# 1. Configurações da Página
+# 1. Configuração de Layout da Página
 st.set_page_config(page_title="Consulta NCM - Irmãos Resende", layout="centered")
 
-# 2. Estilização CSS (Azul Escuro e Azul Claro)
+# 2. Estilização CSS para Visual de Página da Internet
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+    @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
     
-    /* Botão Principal em Azul Escuro */
-    .stButton>button { 
-        width: 100%; background-color: #002e5d; color: white; 
-        font-weight: 700; border-radius: 8px; height: 3.5em; border: none;
-        text-transform: uppercase; transition: 0.3s;
-    }
-    .stButton>button:hover { background-color: #004a94; color: white; border: none; }
+    html, body, [class*="css"] { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     
-    /* Card de Resultado Profissional */
-    .main-card {
+    /* Container Principal */
+    .report-container {
         background-color: #ffffff;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        border-left: 10px solid #002e5d;
-        margin-top: 25px;
-        border-top: 1px solid #e1effe;
-        border-right: 1px solid #e1effe;
-        border-bottom: 1px solid #e1effe;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border-top: 8px solid #002e5d;
+        margin-top: 30px;
     }
-    
-    /* Cabeçalho do Card */
-    .titulo-resultado {
+
+    /* Título do Resultado */
+    .title-result {
         color: #002e5d;
-        font-size: 22px;
+        font-size: 26px;
         font-weight: 700;
-        margin-bottom: 20px;
-        padding-bottom: 12px;
-        border-bottom: 2px solid #f0f7ff;
+        border-bottom: 2px solid #eef2f6;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-    
-    .status-badge {
+
+    .badge-status {
         background-color: #e1effe;
         color: #004a94;
-        padding: 6px 14px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
     }
-    
-    /* Organização de Informações */
-    .info-label { color: #6b7280; font-size: 11px; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
-    .info-valor { color: #111827; font-size: 15px; font-weight: 500; margin-bottom: 15px; }
-    
-    /* Grid de Impostos em Azul Claro */
-    .tax-container {
-        background-color: #f0f7ff; 
-        padding: 20px;
-        border-radius: 10px;
+
+    /* Seções de Informação */
+    .info-box { margin-bottom: 20px; }
+    .info-tag { color: #8a94a6; font-size: 12px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
+    .info-text { color: #1a202c; font-size: 18px; font-weight: 500; margin-top: 5px; }
+
+    /* Grid de Tributação (Azul Claro) */
+    .tax-card {
+        background-color: #f8fbff;
+        border: 1px solid #dbeafe;
+        border-radius: 12px;
+        padding: 25px;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        border: 1px solid #d0e7ff;
-        margin: 15px 0;
+        gap: 20px;
+        margin: 25px 0;
+    }
+
+    .tax-item { display: flex; flex-direction: column; }
+    .tax-label { color: #4a5568; font-size: 12px; font-weight: 600; }
+    .tax-value { color: #002e5d; font-size: 20px; font-weight: 700; }
+
+    /* Rodapé / Base Legal */
+    .legal-footer {
+        background-color: #f1f5f9;
+        padding: 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #475569;
+        line-height: 1.6;
+        border-left: 4px solid #002e5d;
     }
     
-    .destaque-navy { color: #002e5d; font-weight: 700; }
-    
-    /* Box de Base Legal */
-    .base-legal-box {
-        font-size: 13px;
-        background: #ffffff;
-        padding: 15px;
-        border: 1px dashed #002e5d;
+    .stButton>button {
+        background-color: #002e5d;
+        color: white;
         border-radius: 8px;
-        color: #374151;
-        line-height: 1.6;
+        height: 3em;
+        font-weight: bold;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. Logo e Título Superior
-st.markdown("<h2 style='text-align: center; color: #002e5d; margin-bottom: 0;'>Inteligência Tributária</h2>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #004a94; font-weight: 500;'>Irmãos Resende Consultoria</p>", unsafe_allow_html=True)
+# Interface de Busca
+st.markdown("<h2 style='text-align: center; color: #002e5d;'>Consulta Tributária</h2>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #64748b; margin-top: -15px;'>Irmãos Resende Consultoria Especializada</p>", unsafe_allow_html=True)
 
 @st.cache_data
-def carregar_dados():
+def get_database():
     try:
-        # Lê a base do GitHub (ajuste o nome se necessário)
         df = pd.read_csv('base.csv', dtype={'NCM': str})
-        # Limpa o NCM para busca (remove pontos e espaços)
-        df['NCM_Match'] = df['NCM'].astype(str).str.replace('.', '', regex=False).str.strip()
+        df['NCM_Clean'] = df['NCM'].str.replace('.', '', regex=False).str.strip()
         return df
-    except:
-        return None
+    except: return None
 
-df_base = carregar_dados()
+db = get_database()
+ncm_input = st.text_input("Insira o NCM do Produto:", placeholder="Ex: 33051000").replace('.', '').strip()
 
-# 4. Campo de Busca
-ncm_query = st.text_input("Digite o NCM (8 dígitos):", placeholder="Ex: 33051000").replace('.', '').strip()
+if st.button("GERAR RELATÓRIO"):
+    if len(ncm_input) >= 4:
+        # Busca API BrasilAPI
+        res = requests.get(f"https://brasilapi.com.br/api/ncm/v1/{ncm_input}")
+        oficial_desc = res.json().get('descricao', 'NCM não catalogado') if res.status_code == 200 else "NCM Inválido"
 
-if st.button("Analisar Tributação"):
-    if len(ncm_query) >= 4:
-        with st.spinner('Consultando base legal...'):
-            # Consulta Descrição via BrasilAPI
-            res = requests.get(f"https://brasilapi.com.br/api/ncm/v1/{ncm_query}")
-            desc_oficial = res.json().get('descricao', 'Descrição não disponível') if res.status_code == 200 else "NCM Inválido"
+        # Busca Base Local
+        match = None
+        if db is not None:
+            for _, row in db.iterrows():
+                if ncm_input.startswith(str(row['NCM_Clean'])):
+                    match = row
+                    break
 
-            # Busca na Planilha base.csv
-            match = None
-            if df_base is not None:
-                for _, row in df_base.iterrows():
-                    # Permite busca por prefixo (ex: digitar 33051000 e achar 3305 na tabela)
-                    if ncm_query.startswith(str(row['NCM_Match'])):
-                        match = row
-                        break
-
-            # 5. RESULTADO FINAL
-            if match is not None:
-                st.markdown(f"""
-                <div class="main-card">
-                    <div class="titulo-resultado">
+        if match is not None:
+            # RENDERIZAÇÃO DO MODO PÁGINA WEB
+            st.markdown(f"""
+                <div class="report-container">
+                    <div class="title-result">
                         <span>Resultado da Consulta</span>
-                        <span class="status-badge">Monofásico</span>
+                        <span class="badge-status">INCIDÊNCIA MONOFÁSICA</span>
                     </div>
                     
-                    <div class="info-label">Descrição do Produto</div>
-                    <div class="info-valor">{desc_oficial}</div>
-                    
-                    <div class="info-label">Grupo / Enquadramento</div>
-                    <div class="info-valor">{match.get('Descrição', match.get('Descricao', 'Item Monofásico'))}</div>
-
-                    <div class="tax-container">
-                        <div>
-                            <div class="info-label">CST Varejo (Saída)</div>
-                            <div class="info-valor destaque-navy">04 - Alíquota Zero</div>
-                        </div>
-                        <div>
-                            <div class="info-label">CST Indústria (Entrada)</div>
-                            <div class="info-valor">02 - Diferenciada</div>
-                        </div>
-                        <div>
-                            <div class="info-label">PIS (Fabricante)</div>
-                            <div class="info-valor">{match.get('PIS', '---')}</div>
-                        </div>
-                        <div>
-                            <div class="info-label">COFINS (Fabricante)</div>
-                            <div class="info-valor">{match.get('COFINS', '---')}</div>
-                        </div>
+                    <div class="info-box">
+                        <div class="info-tag">NCM Analisado</div>
+                        <div class="info-text">{ncm_input}</div>
                     </div>
 
-                    <div class="base-legal-box">
-                        <span class="destaque-navy">FUNDAMENTAÇÃO LEGAL:</span><br>
-                        {match.get('Fundamentação', match.get('Fundamentacao', 'Conforme Tabela 4.3.10 do SPED.'))}
+                    <div class="info-box">
+                        <div class="info-tag">Descrição do Produto</div>
+                        <div class="info-text">{oficial_desc}</div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-tag">Classificação Tabela 4.3.10</div>
+                        <div class="info-text">{match.get('Descrição', match.get('Descricao', 'Geral'))}</div>
+                    </div>
+
+                    <div class="tax-card">
+                        <div class="tax-item">
+                            <span class="tax-label">CST Saída (Varejo)</span>
+                            <span class="tax-value">04 - Alíq. Zero</span>
+                        </div>
+                        <div class="tax-item">
+                            <span class="tax-label">CST Entrada</span>
+                            <span class="tax-value">02 / 70</span>
+                        </div>
+                        <div class="tax-item">
+                            <span class="tax-label">Alíquota PIS</span>
+                            <span class="tax-value">{match.get('PIS', '2,10%')}</span>
+                        </div>
+                        <div class="tax-item">
+                            <span class="tax-label">Alíquota COFINS</span>
+                            <span class="tax-value">{match.get('COFINS', '10,30%')}</span>
+                        </div>
+                    </div>
+
+                    <div class="legal-footer">
+                        <strong>FUNDAMENTAÇÃO LEGAL:</strong><br>
+                        {match.get('Fundamentação', match.get('Fundamentacao', 'Conforme diretrizes da Lei 10.147/00 e Tabela 4.3.10 do SPED.'))}
                     </div>
                     
-                    <p style="text-align:center; font-size:10px; color:#9ca3af; margin-top:20px;">
-                        Relatório Gerado por Irmãos Resende Consultoria - © 2026
+                    <p style="text-align:center; font-size:11px; color:#94a3b8; margin-top:30px;">
+                        Relatório oficial gerado em 2026 para Irmãos Resende Consultoria.
                     </p>
                 </div>
-                """, unsafe_allow_html=True)
-            else:
-                st.markdown(f"""
-                <div style="padding:20px; border-radius:10px; background-color:#fff5f5; border:1px solid #feb2b2; margin-top:20px;">
-                    <h4 style="color:#c53030; margin:0;">Tributação Normal</h4>
-                    <p style="color:#742a2a; margin-top:10px;">O NCM <b>{ncm_query}</b> não foi identificado como monofásico nesta base.</p>
-                </div>
-                """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
+        else:
+            st.warning("⚠️ Este produto não foi identificado como Monofásico nos grupos da Tabela 4.3.10.")
     else:
-        st.warning("Informe pelo menos 4 dígitos para a busca.")
+        st.error("Por favor, digite um NCM válido.")
 
-st.markdown("---")
-st.caption("Irmãos Resende | Base: Tabela 4.3.10 do SPED (Versão 1.24)")
+st.markdown("<br><br>", unsafe_allow_html=True)
